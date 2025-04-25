@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Meiose - Anáfase I</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #fff8dc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 30px;
+      margin: 0;
+    }
+
+    h2 {
+      font-size: 2.2em;
+      color: #6d4c41;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2em;
+      color: #5d4037;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .fase {
+      background-color: #ffffff;
+      border: 2px solid #fbc02d;
+      border-radius: 20px;
+      padding: 25px;
+      width: 80%;
+      max-width: 620px;
+      box-shadow: 0px 6px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .nucleo {
+      border: 2px dashed #f9a825;
+      padding: 20px;
+      border-radius: 50%;
+      margin: 20px auto;
+      width: 300px;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      background-color: #fffde7;
+      box-shadow: inset 0px 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .cromossomo-img {
+      width: 100px;
+      height: 100px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      position: absolute;
+      transition: all 0.5s ease;
+      cursor: pointer;
+    }
+
+    #crm {
+      background-image: url('/static/img/crm.png');
+      top: 100px;
+      left: 100px;
+    }
+
+    #cvm {
+      background-image: url('/static/img/cvm.png');
+      top: 120px;
+      left: 130px;
+    }
+
+    .botao {
+      margin-top: 25px;
+      background-color: #fbc02d;
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1.1em;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      display: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .botao:hover {
+      background-color: #f9a825;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="fase">
+    <h2>✨ Anáfase I</h2>
+    <p>Os cromossomos homólogos se separam e vão para os polos. Clique para vê-los migrar e ver a separação!</p>
+    <div class="nucleo" id="nucleo">
+      <div id="crm" class="cromossomo-img" onclick="migrar('crm', 'esquerda')"></div>
+      <div id="cvm" class="cromossomo-img" onclick="migrar('cvm', 'direita')"></div>
+    </div>
+    <button class="botao" id="avancar" onclick="window.location.href='/meiose/telofase1'">Avançar para a Telófase I</button>
+  </div>
+
+  <script>
+    let migrados = 0;
+
+    function migrar(id, lado) {
+      const cromossomo = document.getElementById(id);
+      cromossomo.onclick = null;
+
+      if (lado === 'esquerda') {
+        cromossomo.style.left = '20px';
+      } else {
+        cromossomo.style.left = '200px';
+      }
+
+      migrados++;
+      if (migrados === 2) {
+        document.getElementById('avancar').style.display = 'inline-block';
+      }
+    }
+  </script>
+</body>
+</html>

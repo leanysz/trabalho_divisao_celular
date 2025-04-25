@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Mitose - Metáfase</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #ffe4ec, #f8bbd0);
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .fase {
+      background-color: white;
+      border: 2px solid #f06292;
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      width: 90%;
+      max-width: 700px;
+      box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      font-size: 2.2em;
+      color: #880e4f;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2em;
+      color: #4a148c;
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+
+    .nucleo {
+      border: 2px dashed #f06292;
+      border-radius: 50%;
+      width: 320px;
+      height: 320px;
+      margin: 0 auto 30px;
+      background-color: #fff0f5;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: inset 0 0 10px #f48fb1;
+    }
+
+    .cromossomo-img {
+      width: 100px;
+      height: 100px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      position: absolute;
+      cursor: pointer;
+      transition: all 0.6s ease-in-out;
+    }
+
+    .cromossomo-img:hover {
+      transform: scale(1.1);
+    }
+
+    #cr {
+      background-image: url('/static/img/cr.png');
+      top: 40px;
+      left: 50px;
+    }
+
+    #cv {
+      background-image: url('/static/img/cv.png');
+      top: 160px;
+      left: 180px;
+    }
+
+    .botao {
+      background-color: #f06292;
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      font-size: 1.1em;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: none;
+    }
+
+    .botao:hover {
+      background-color: #d81b60;
+      transform: scale(1.05);
+    }
+
+    .botao:active {
+      transform: scale(0.95);
+    }
+  </style>
+</head>
+<body>
+  <div class="fase">
+    <h2>✨ Metáfase</h2>
+    <p>Os cromossomos alinham-se no centro da célula. Clique neles para alinhá-los!</p>
+    <div class="nucleo" id="nucleo">
+      <div id="cr" class="cromossomo-img" onclick="alinharCromossomo('cr')"></div>
+      <div id="cv" class="cromossomo-img" onclick="alinharCromossomo('cv')"></div>
+    </div>
+    <button class="botao" id="avancar" onclick="window.location.href='/mitose/anafase'">Avançar para a Anáfase</button>
+  </div>
+
+  <script>
+    let alinhados = 0;
+
+    function alinharCromossomo(id) {
+      const cromossomo = document.getElementById(id);
+      const centroX = 110;
+      const centroY = alinhados === 0 ? 90 : 170;
+
+      cromossomo.style.left = `${centroX}px`;
+      cromossomo.style.top = `${centroY}px`;
+      cromossomo.style.transform = 'scale(1.2)';
+      cromossomo.onclick = null;
+
+      alinhados++;
+
+      if (alinhados === 2) {
+        document.getElementById('avancar').style.display = 'inline-block';
+      }
+    }
+  </script>
+</body>
+</html>
