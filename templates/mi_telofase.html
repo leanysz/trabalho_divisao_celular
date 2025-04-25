@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Mitose - Telófase</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #e8f5e9, #f1fff6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 30px;
+      margin: 0;
+      height: 100vh;
+    }
+
+    .fase {
+      background-color: #ffffff;
+      border: 2px solid #a5d6a7;
+      border-radius: 25px;
+      padding: 40px 30px;
+      text-align: center;
+      width: 95%;
+      max-width: 900px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      font-size: 2.4em;
+      color: #2e7d32;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.25em;
+      color: #4e5c52;
+      margin-bottom: 30px;
+    }
+
+    .citoplasma {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+      width: 100%;
+      position: relative;
+      min-height: 280px;
+      transition: all 1s ease;
+    }
+
+    .citoplasma.dividido {
+      justify-content: space-around;
+    }
+
+    .nucleo {
+      border: 2px dashed #43a047;
+      border-radius: 50%;
+      width: 230px;
+      height: 230px;
+      background: linear-gradient(145deg, #f1fff6, #d0ebd8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      box-shadow: inset 0 0 10px rgba(76, 175, 80, 0.2);
+      opacity: 0;
+      animation: aparecer 0.6s ease-out forwards;
+      animation-delay: 0.4s;
+    }
+
+    .envoltorio {
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      top: 20px;
+      left: 30px;
+      border-radius: 50%;
+      border: 3px solid #2c7b30;
+      border-radius: 50%;
+      opacity: 0;
+      animation: aparecer 0.6s ease forwards;
+      animation-delay: 0.6s;
+    }
+
+    .clone-img {
+      width: 80px;
+      height: 80px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      position: absolute;
+      opacity: 0;
+      animation: surgir 1s ease forwards;
+    }
+
+    .clone-img:nth-of-type(2) {
+      animation-delay: 0.8s;
+      top: 30px;
+      left: 30px;
+    }
+
+    .clone-img:nth-of-type(3) {
+      animation-delay: 1s;
+      top: 90px;
+      left: 90px;
+    }
+
+    .centriole {
+      width: 20px;
+      height: 20px;
+      background-color: #388e3c;
+      border-radius: 50%;
+      position: absolute;
+      box-shadow: 0 0 6px rgba(56, 142, 60, 0.5);
+      opacity: 0;
+      animation: centriole-move 0.6s ease-out forwards;
+      animation-delay: 1.2s;
+    }
+
+    .centriole.left {
+      top: 25px;
+      left: 40px;
+    }
+
+    .centriole.right {
+      bottom: 20px;
+      right: 40px;
+    }
+
+    #iniciar, #finalizar, #proxima {
+      margin-top: 30px;
+      background-color: #66bb6a;
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      font-size: 1.2em;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(102, 187, 106, 0.3);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    #iniciar:hover, #finalizar:hover, #proxima:hover {
+      background-color: #43a047;
+      transform: scale(1.05);
+    }
+
+    #iniciar:active, #finalizar:active, #proxima:active {
+      transform: scale(0.97);
+    }
+
+    #finalizar, #proxima {
+      display: none;
+    }
+
+    @keyframes surgir {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes centriole-move {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .citoplasma::before {
+      content: '';
+      position: absolute;
+      width: 420px;
+      height: 220px;
+      border-radius: 50%;
+      background-color: #d9fbe3;
+      z-index: -1;
+      transition: all 1.2s ease;
+    }
+
+    .citoplasma.dividido::before {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      left: 90px;
+      background: radial-gradient(#d9fbe3, transparent);
+    }
+
+    .citoplasma.dividido::after {
+      content: '';
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      right: 90px;
+      border-radius: 50%;
+      background: radial-gradient(#d9fbe3, transparent);
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <div class="fase">
+    <h2>✨ Telófase</h2>
+    <p>O núcleo da célula volta e ela começa a se dividir. Observe como os núcleos se reorganizam e divida a célula em duas!</p>
+    <div class="citoplasma" id="citoplasma">
+      <div class="nucleo">
+        <div class="envoltorio"></div>
+        <div class="clone-img" style="background-image: url('/static/img/crs.png');"></div>
+        <div class="clone-img" style="background-image: url('/static/img/cvs.png');"></div>
+        <div class="centriole left"></div>
+        <div class="centriole right"></div>
+      </div>
+      <div class="nucleo">
+        <div class="envoltorio"></div>
+        <div class="clone-img" style="background-image: url('/static/img/crs.png');"></div>
+        <div class="clone-img" style="background-image: url('/static/img/cvs.png');"></div>
+        <div class="centriole left"></div>
+        <div class="centriole right"></div>
+      </div>
+    </div>
+    <button id="iniciar" onclick="iniciarTelofase()">Separar células</button>
+    <button id="finalizar" onclick="window.location.href='/mitose/esquema'">Ver Esquema</button>
+  </div>
+
+  <script>
+    function iniciarTelofase() {
+      const citoplasma = document.getElementById('citoplasma');
+      citoplasma.classList.add('dividido');
+      document.getElementById('iniciar').style.display = 'none';
+      setTimeout(() => {
+        document.getElementById('finalizar').style.display = 'inline-block';
+      }, 600);
+    }
+  </script>
+</body>
+</html>

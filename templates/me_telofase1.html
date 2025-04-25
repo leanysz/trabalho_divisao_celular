@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Meiose - Telófase I</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #e0f7e9, #f1fff6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 30px;
+      margin: 0;
+    }
+
+    h2 {
+      font-size: 2.4em;
+      color: #2e7d32;
+    }
+
+    p {
+      font-size: 1.25em;
+      color: #3e4c45;
+      text-align: center;
+    }
+
+    .fase {
+      background-color: white;
+      border: 2px solid #66bb6a;
+      border-radius: 20px;
+      padding: 30px;
+      margin-top: 20px;
+      text-align: center;
+      width: 90%;
+      max-width: 800px;
+      box-shadow: 0px 6px 18px rgba(0,0,0,0.1);
+    }
+
+    .citoplasma {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+      width: 100%;
+      position: relative;
+      min-height: 260px;
+      transition: all 1s ease;
+    }
+
+    .citoplasma.dividido {
+      justify-content: space-around;
+    }
+
+    .citoplasma::before {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 200px;
+      border-radius: 50%;
+      background-color: #d9fbe3;
+      z-index: -1;
+      transition: all 1.2s ease;
+    }
+
+    .citoplasma.dividido::before {
+      width: 180px;
+      height: 180px;
+      left: 90px;
+      background: radial-gradient(#d9fbe3, transparent);
+    }
+
+    .citoplasma.dividido::after {
+      content: '';
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      right: 90px;
+      border-radius: 50%;
+      background: radial-gradient(#d9fbe3, transparent);
+      z-index: -1;
+    }
+
+    .celula {
+      position: relative;
+      width: 180px;
+      height: 180px;
+    }
+
+    .nucleo {
+      border: 2px dashed #43a047;
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f1fff6;
+      position: relative;
+      opacity: 0;
+      animation: aparecer 1s ease-out forwards;
+      animation-delay: 0.3s;
+    }
+
+    .envoltorio {
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      top: 25px;
+      left: 25px;
+      border: 3px solid #2c7b30;
+      border-radius: 50%;
+      opacity: 0;
+      animation: aparecer 1s ease forwards;
+      animation-delay: 1.6s;
+    }
+
+    .cromossomo-img {
+      width: 80px;
+      height: 80px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      position: absolute;
+      top: 50px;
+      left: 50px;
+      opacity: 0;
+      animation: surgir 1s ease forwards;
+      animation-delay: 2s;
+    }
+
+    .centriole {
+      width: 16px;
+      height: 16px;
+      background-color: #1b5e20;
+      border-radius: 50%;
+      position: absolute;
+      box-shadow: 0 0 10px rgba(0, 128, 0, 0.7);
+      opacity: 0;
+      animation: centriole-move 1s ease-out forwards;
+      animation-delay: 2.4s;
+      z-index: 2;
+      transition: transform 1.2s ease;
+    }
+
+    .n1 { top: 50px; left: 10px; }
+    .n2 { bottom: 40px; right: 10px; }
+    .n3 { top: 50px; left: 10px; }
+    .n4 { bottom: 40px; right: 10px; }
+
+    #avancar, #iniciar {
+      margin-top: 30px;
+      background-color: #66bb6a;
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 10px rgba(102, 187, 106, 0.3);
+    }
+
+    #avancar:hover, #iniciar:hover {
+      background-color: #43a047;
+      transform: scale(1.05);
+    }
+
+    #avancar:active, #iniciar:active {
+      transform: scale(0.97);
+    }
+
+    #avancar {
+      display: none;
+    }
+
+    @keyframes surgir {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes centriole-move {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="fase">
+    <h2>✨ Telófase I</h2>
+    <p>O núcleo da célula volta e ela começa a se dividir. Observe como os núcleos se reorganizam e divida a célula em duas, cada uma com um par de cromossomo homólogo!</p>
+    <div class="citoplasma" id="citoplasma">
+      <div class="celula">
+        <div class="nucleo">
+          <div class="envoltorio"></div>
+          <div class="cromossomo-img" style="background-image: url('/static/img/crm.png');"></div>
+        </div>
+        <div class="centriole n1"></div>
+        <div class="centriole n2"></div>
+      </div>
+      <div class="celula">
+        <div class="nucleo">
+          <div class="envoltorio"></div>
+          <div class="cromossomo-img" style="background-image: url('/static/img/cvm.png');"></div>
+        </div>
+        <div class="centriole n3"></div>
+        <div class="centriole n4"></div>
+      </div>
+    </div>
+    <button id="iniciar" onclick="iniciarTelofase()">Separar células</button>
+    <button id="avancar" onclick="window.location.href='/meiose/profase2'">Avançar para a Prófase II</button>
+  </div>
+
+  <script>
+    function iniciarTelofase() {
+      const citoplasma = document.getElementById('citoplasma');
+      const iniciarBtn = document.getElementById('iniciar');
+      const avancarBtn = document.getElementById('avancar');
+
+      citoplasma.classList.add('dividido');
+      iniciarBtn.style.display = 'none';
+
+      // Mover centríolos em cada célula
+      document.querySelector('.n1').style.transform = 'translate(-30px, -20px)';
+      document.querySelector('.n2').style.transform = 'translate(30px, 20px)';
+      document.querySelector('.n3').style.transform = 'translate(-30px, -20px)';
+      document.querySelector('.n4').style.transform = 'translate(30px, 20px)';
+
+      setTimeout(() => {
+        avancarBtn.style.display = 'inline-block';
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

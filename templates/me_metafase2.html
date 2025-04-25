@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Meiose - Metáfase II</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffe4ec;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 30px;
+      margin: 0;
+    }
+
+    h2 {
+      font-size: 2em;
+      color: #2c3e50;
+    }
+
+    p {
+      font-size: 1.2em;
+      color: #2c3e50;
+      text-align: center;
+    }
+
+    .fase {
+      background-color: white;
+      border: 2px solid #f06292;
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+      width: 90%;
+      max-width: 700px;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .citoplasma {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 30px;
+      width: 100%;
+    }
+
+    .nucleo {
+      border: 2px dashed #ec407a;
+      padding: 20px;
+      border-radius: 50%;
+      width: 200px;
+      height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      background-color: #fff0f5;
+    }
+
+    .cromossomo-img {
+      width: 100px;
+      height: 100px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      position: absolute;
+      cursor: pointer;
+      transition: all 0.5s ease;
+    }
+
+    #cr1 {
+      background-image: url('/static/img/crm.png');
+      top: 30px;
+      left: 50px;
+    }
+
+    #cv2 {
+      background-image: url('/static/img/cvm.png');
+      top: 30px;
+      left: 50px;
+    }
+
+    .botao {
+      margin-top: 30px;
+      background-color: #f06292;
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      font-size: 1.1em;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      display: none;
+    }
+
+    .botao:hover {
+      background-color: #d81b60;
+    }
+  </style>
+</head>
+<body>
+  <div class="fase">
+    <h2>✨ Metáfase II</h2>
+    <p>Os cromossomos alinham-se no centro das células. Clique neles para alinhá-los, em cada uma!</p>
+    <div class="citoplasma">
+      <div class="nucleo">
+        <div id="cr1" class="cromossomo-img" onclick="alinharCromossomo('cr1', 0)"></div>
+      </div>
+      <div class="nucleo">
+        <div id="cv2" class="cromossomo-img" onclick="alinharCromossomo('cv2', 1)"></div>
+      </div>
+    </div>
+    <button class="botao" id="avancar" onclick="window.location.href='/meiose/anafase2'">Avançar para a Anáfase II</button>
+  </div>
+
+  <script>
+    const alinhados = [false, false];
+    const posicoes = [60, 60];
+
+    function alinharCromossomo(id, index) {
+      const cromossomo = document.getElementById(id);
+      cromossomo.style.left = '70px';
+      cromossomo.style.top = `${posicoes[index]}px`;
+      cromossomo.onclick = null;
+      alinhados[index] = true;
+
+      if (alinhados.every(v => v)) {
+        document.getElementById('avancar').style.display = 'inline-block';
+      }
+    }
+  </script>
+</body>
+</html>

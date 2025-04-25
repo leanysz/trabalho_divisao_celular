@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Meiose - Telófase II</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #e0f7e9, #f1fff6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 30px;
+      margin: 0;
+    }
+
+    h2 {
+      font-size: 2.4em;
+      color: #2e7d32;
+    }
+
+    p {
+      font-size: 1.25em;
+      color: #3e4c45;
+      text-align: center;
+    }
+
+    .fase {
+      background-color: white;
+      border: 2px solid #66bb6a;
+      border-radius: 20px;
+      padding: 30px;
+      margin-top: 20px;
+      text-align: center;
+      width: 90%;
+      max-width: 900px;
+      box-shadow: 0px 6px 18px rgba(0,0,0,0.1);
+    }
+
+    .citoplasma {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      transition: all 1.5s ease;
+    }
+
+    .par {
+      display: flex;
+      gap: 10px;
+      transition: all 1.5s ease;
+    }
+
+    .par.separado {
+      gap: 120px;
+    }
+
+    .nucleo {
+      border: 2px dashed #43a047;
+      border-radius: 50%;
+      width: 180px;
+      height: 180px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f1fff6;
+      position: relative;
+      opacity: 0;
+      animation: surgir 1s ease forwards;
+    }
+
+    .envoltorio {
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      border: 3px solid #2c7b30;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.6);
+      z-index: 0;
+      animation: aparecer 0.8s ease forwards;
+      animation-delay: 0.4s;
+      opacity: 0;
+    }
+
+    .cromossomo-img {
+      width: 80px;
+      height: 80px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      animation: aparecer 0.8s ease forwards;
+      animation-delay: 0.6s;
+    }
+
+    .centriole {
+      width: 14px;
+      height: 14px;
+      background-color: #1b5e20;
+      border-radius: 50%;
+      position: absolute;
+      box-shadow: 0 0 8px rgba(0, 128, 0, 0.7);
+      opacity: 0;
+      animation: aparecer 1s ease-out forwards;
+      animation-delay: 0.8s;
+      z-index: 2;
+    }
+
+    .top-left { top: 30px; left: 20px; }
+    .bottom-right { bottom: 30px; right: 20px; }
+    .top-right { top: 30px; right: 20px; }
+    .bottom-left { bottom: 30px; left: 20px; }
+
+    #iniciar, #avancar {
+      margin-top: 30px;
+      background-color: #66bb6a;
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 10px rgba(102, 187, 106, 0.3);
+    }
+
+    #iniciar:hover, #avancar:hover {
+      background-color: #43a047;
+      transform: scale(1.05);
+    }
+
+    #iniciar:active, #avancar:active {
+      transform: scale(0.97);
+    }
+
+    #avancar {
+      display: none;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes surgir {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="fase">
+    <h2>🌱 Telófase II</h2>
+    <p>O núcleo das células voltam e elas começam a se dividir. Observe como os núcleos se reorganizam e divida as células em quatro células-filhas, cada uma com metade do DNA!</p>
+
+    <div class="citoplasma">
+      <div class="par" id="parCima">
+        <div class="nucleo">
+          <div class="envoltorio"></div>
+          <div class="cromossomo-img" style="background-image: url('/static/img/crsm.png');"></div>
+          <div class="centriole top-left"></div>
+          <div class="centriole bottom-right"></div>
+        </div>
+        <div class="nucleo">
+          <div class="envoltorio"></div>
+          <div class="cromossomo-img" style="background-image: url('/static/img/crs.png');"></div>
+          <div class="centriole top-left"></div>
+          <div class="centriole bottom-right"></div>
+        </div>
+      </div>
+
+      <div class="par" id="parBaixo">
+        <div class="nucleo">
+          <div class="envoltorio"></div>
+          <div class="cromossomo-img" style="background-image: url('/static/img/cvs.png');"></div>
+          <div class="centriole top-right"></div>
+          <div class="centriole bottom-left"></div>
+        </div>
+        <div class="nucleo">
+          <div class="envoltorio"></div>
+          <div class="cromossomo-img" style="background-image: url('/static/img/cvsm.png');"></div>
+          <div class="centriole top-right"></div>
+          <div class="centriole bottom-left"></div>
+        </div>
+      </div>
+    </div>
+
+    <button id="iniciar" onclick="separarCelulas()">Separar células</button>
+    <button id="avancar" onclick="window.location.href='/meiose/esquema'">Ver Esquema</button>
+  </div>
+
+  <script>
+    function separarCelulas() {
+      document.getElementById('parCima').classList.add('separado');
+      document.getElementById('parBaixo').classList.add('separado');
+      document.getElementById('iniciar').style.display = 'none';
+
+      setTimeout(() => {
+        document.getElementById('avancar').style.display = 'inline-block';
+      }, 1600);
+    }
+  </script>
+</body>
+</html>

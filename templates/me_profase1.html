@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Meiose - Prófase I</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #fef9f5, #ffe7d1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 30px;
+      margin: 0;
+    }
+
+    h2 {
+      font-size: 2.4em;
+      color: #e67e22;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2em;
+      color: #555;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .fase {
+      background-color: white;
+      border: 2px solid #e67e22;
+      border-radius: 20px;
+      padding: 30px 25px;
+      margin-top: 20px;
+      text-align: center;
+      width: 90%;
+      max-width: 650px;
+      box-shadow: 0px 10px 25px rgba(0,0,0,0.1);
+    }
+
+    #celula {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      margin: 20px auto;
+      border: 2px dashed #e67e22;
+      border-radius: 50%;
+      background-color: #fdf2e9;
+      box-shadow: inset 0 0 20px rgba(230, 126, 34, 0.2), 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    #nucleo {
+      position: absolute;
+      top: 80px;
+      left: 80px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background-color: rgba(230, 126, 34, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: opacity 0.5s ease;
+      box-shadow: inset 0 0 10px rgba(230, 126, 34, 0.3);
+    }
+
+    #nucleo.oculto {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .texto-nucleo {
+      font-size: 1em;
+      color: #e67e22;
+      pointer-events: none;
+    }
+
+    .centriolo {
+      width: 30px;
+      height: 30px;
+      background-color: #d35400;
+      border-radius: 50%;
+      position: absolute;
+      cursor: pointer;
+      opacity: 0.85;
+      transition: all 0.8s ease;
+      box-shadow: 0 4px 10px rgba(211, 84, 0, 0.4);
+    }
+
+    #centro1 {
+      top: 140px;
+      left: 20px;
+    }
+
+    #centro2 {
+      top: 140px;
+      left: 270px;
+    }
+
+    .cromossomo {
+      width: 100px;
+      height: 100px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      position: absolute;
+      cursor: pointer;
+      transition: all 0.5s ease;
+      filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.2));
+    }
+
+    #cr {
+      top: 100px;
+      left: 70px;
+      background-image: url('/static/img/cr.png');
+    }
+
+    #cv {
+      top: 100px;
+      left: 140px;
+      background-image: url('/static/img/cv.png');
+    }
+
+    .botao {
+      margin-top: 25px;
+      background-color: #e67e22;
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      font-size: 1.1em;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      display: none;
+      box-shadow: 0 4px 12px rgba(230, 126, 34, 0.3);
+    }
+
+    .botao:hover {
+      background-color: #d35400;
+      transform: scale(1.05);
+    }
+
+    .botao:active {
+      transform: scale(0.97);
+    }
+  </style>
+</head>
+<body>
+  <div class="fase">
+    <h2>✨ Prófase I</h2>
+    <p>Os cromossomos se condensam, o núcleo desaparece e fazem crossing-over, processo que permite a variabilidade genética. Clique para remover o envelope nuclear, os centríolos e para ver o crossing-over acontecer!</p>
+
+    <div id="celula">
+      <div id="nucleo" onclick="removerNucleo()">
+        <span class="texto-nucleo">Envelope Nuclear</span>
+      </div>
+
+      <div id="centro1" class="centriolo" onclick="ativarCentro(1)"></div>
+      <div id="centro2" class="centriolo" onclick="ativarCentro(2)"></div>
+
+      <div class="cromossomo" id="cr" onclick="parear()"></div>
+      <div class="cromossomo" id="cv" onclick="parear()"></div>
+    </div>
+
+    <button class="botao" id="avancar" onclick="window.location.href='/meiose/metafase1'">Avançar para a Metáfase I</button>
+  </div>
+
+  <script>
+    let nucleoRemovido = false;
+    let centro1Ativado = false;
+    let centro2Ativado = false;
+    let crossingOverAtivo = false;
+
+    function removerNucleo() {
+      document.getElementById("nucleo").classList.add("oculto");
+      nucleoRemovido = true;
+      verificarProgresso();
+    }
+
+    function ativarCentro(num) {
+      const centro = document.getElementById("centro" + num);
+      centro.style.left = (num === 1) ? "0px" : "290px";
+      setTimeout(() => centro.style.display = "none", 800);
+      if (num === 1) centro1Ativado = true;
+      if (num === 2) centro2Ativado = true;
+      verificarProgresso();
+    }
+
+    function parear() {
+      if (!crossingOverAtivo) {
+        document.getElementById("cr").style.left = "90px";
+        document.getElementById("cv").style.left = "120px";
+        document.getElementById("cr").style.top = "110px";
+        document.getElementById("cv").style.top = "130px";
+
+        setTimeout(() => {
+          document.getElementById("cr").style.backgroundImage = "url('/static/img/crm.png')";
+          document.getElementById("cv").style.backgroundImage = "url('/static/img/cvm.png')";
+          crossingOverAtivo = true;
+          verificarProgresso();
+        }, 500);
+      }
+    }
+
+    function verificarProgresso() {
+      if (nucleoRemovido && centro1Ativado && centro2Ativado && crossingOverAtivo) {
+        document.getElementById("avancar").style.display = "inline-block";
+      }
+    }
+  </script>
+</body>
+</html>
